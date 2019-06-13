@@ -20,9 +20,7 @@ export default class Profile extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const newTag = {
-      tag: this.state.tag
-    };
+    const newTag = this.state.tag;
 
     const updatedTags = [...this.state.tags, newTag];
 
@@ -30,8 +28,6 @@ export default class Profile extends Component {
       tags: updatedTags,
       tag: ''
     });
-
-    console.log(this.state.tags);
   };
   render() {
     const avg = array => {
@@ -43,6 +39,7 @@ export default class Profile extends Component {
 
     const { showFullGrade, tags } = this.state;
     profile.tags = tags;
+
     return (
       <React.Fragment>
         <li className="box">
@@ -73,8 +70,8 @@ export default class Profile extends Component {
                 <br />
                 {profile.tags.map((tag, index) => {
                   return (
-                    <li key={tag.index} className="tag">
-                      {tag.tag}
+                    <li key={index} className="tag">
+                      {tag}
                     </li>
                   );
                 })}
@@ -88,7 +85,7 @@ export default class Profile extends Component {
                         value={this.state.tag}
                         onChange={this.handleChange}
                       />
-                      <label for="tag-input">Add a tag</label>
+                      <label htmlFor="tag-input">Add a tag</label>
                     </form>
                   </div>
                 </div>

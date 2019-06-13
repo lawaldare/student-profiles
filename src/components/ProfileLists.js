@@ -6,6 +6,7 @@ export default class ProfileLists extends Component {
   state = {
     name: '',
     tag: '',
+    tags: [],
     profiles: [],
     isLoaded: false
   };
@@ -29,7 +30,7 @@ export default class ProfileLists extends Component {
   };
 
   render() {
-    const { profiles, isLoaded } = this.state;
+    const { profiles, isLoaded, tags } = this.state;
 
     let filteredProfiles = profiles.filter(profile => {
       profile.name = `${profile.firstName} ${profile.lastName}`;
@@ -38,24 +39,29 @@ export default class ProfileLists extends Component {
       );
     });
 
-    // const tagged = profiles.map(person => {
-    //   return person.tags.filter(t => {
-    //     return t.tag.toLowerCase().indexOf(this.state.tag.toLowerCase()) !== -1;
-    //   });
-    // });
+    //console.log(filteredProfiles);
+
+    let taggedProfiles = profiles.map(person => {
+      person.tags = tags;
+      //console.log(person.tags);
+
+      return person.tags.filter(tag => {
+        return tag.toLowerCase().indexOf(this.state.tag.toLowerCase()) !== -1;
+      });
+    });
 
     if (!isLoaded) {
       return (
-        <div class="preloader-wrapper big active">
-          <div class="spinner-layer spinner-blue">
-            <div class="circle-clipper left">
-              <div class="circle" />
+        <div className="preloader-wrapper big active">
+          <div className="spinner-layer spinner-blue">
+            <div className="circle-clipper left">
+              <div className="circle" />
             </div>
-            <div class="gap-patch">
-              <div class="circle" />
+            <div className="gap-patch">
+              <div className="circle" />
             </div>
-            <div class="circle-clipper right">
-              <div class="circle" />
+            <div className="circle-clipper right">
+              <div className="circle" />
             </div>
           </div>
         </div>
@@ -64,30 +70,30 @@ export default class ProfileLists extends Component {
       return (
         <div className="wrapper">
           <form>
-            <div class="row">
-              <div class="input-field col s12">
+            <div className="row">
+              <div className="input-field col s12">
                 <input
                   id="search-input"
                   type="text"
-                  class="validate"
+                  className="validate"
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
-                <label for="search-input" style={{ fontSize: '1.5rem' }}>
+                <label htmlFor="search-input" style={{ fontSize: '1.5rem' }}>
                   Search by Name
                 </label>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
+            <div className="row">
+              <div className="input-field col s12">
                 <input
                   id="tag-input"
                   type="text"
-                  class="validate"
+                  className="validate"
                   value={this.state.tag}
                   onChange={this.handleTagChange}
                 />
-                <label for="tag-input" style={{ fontSize: '1.5rem' }}>
+                <label htmlFor="tag-input" style={{ fontSize: '1.5rem' }}>
                   Search by Tag
                 </label>
               </div>
@@ -97,7 +103,7 @@ export default class ProfileLists extends Component {
             {filteredProfiles.map(profile => {
               return <Profile profile={profile} key={profile.id} />;
             })}
-            {/* {tagged.map(profile => {
+            {/* {taggedProfiles.map(profile => {
               return <Profile profile={profile} key={profile.id} />;
             })} */}
           </ul>
